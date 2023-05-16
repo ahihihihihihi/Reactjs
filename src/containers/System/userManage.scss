@@ -51,3 +51,46 @@
         color: black !important;
     }
 }
+
+.modal-user-container {
+    .modal-user-body {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            width: 49%;
+
+            // &.max-width-input {
+            //     width: 100%;
+            // }
+
+            input {
+                border-radius: 3px;
+                height: 30px;
+                border: 1px solid grey;
+                outline: none;
+                padding: 0 5px;
+            }
+        }
+
+        .max-width-input {
+            width: 100%;
+        }
+    }
+
+    .modal-content {
+        .modal-header {
+            button {
+                background: none;
+                border: none;
+                font-size: 30px;
+                color: white;
+            }
+        }
+    }
+
+}
