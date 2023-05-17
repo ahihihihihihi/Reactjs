@@ -85,7 +85,7 @@ class Login extends Component {
                             <label>Password:</label>
                             <div className='custom-input-password'>
                                 <input className='form-control' type={this.state.isShowPassword ? 'text' : 'password'} placeholder='Enter your password...' onChange={(event) => this.handleOnChangePassword(event)} />
-                                <span onClick={() => { this.handleShowHidePassword() }} ><i class={this.state.isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i></span>
+                                <span onClick={() => { this.handleShowHidePassword() }} ><i className={this.state.isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i></span>
                             </div>
                         </div>
                         <div className='col-12' style={{ color: 'red' }}>
@@ -101,8 +101,8 @@ class Login extends Component {
                             <span>or login with:</span>
                         </div>
                         <div className='col-12 social-login'>
-                            <i class="fab fa-google-plus-g google" ></i>
-                            <i class="fab fa-facebook-f facebook"></i>
+                            <i className="fab fa-google-plus-g google" ></i>
+                            <i className="fab fa-facebook-f facebook"></i>
                         </div>
                     </div>
                 </div>
