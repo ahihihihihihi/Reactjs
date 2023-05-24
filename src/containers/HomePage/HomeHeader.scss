@@ -9,15 +9,16 @@
         display: flex;
 
         .left-content {
-            width: 25%;
-            border: 1px solid green;
+            width: 20%;
+            // border: 1px solid green;
             display: flex;
             align-items: center;
+            gap: 10px;
+            padding-left: 50px;
 
             .header-logo {
-                background: url(../../assets/logo.svg) center center no-repeat;
-                height: 100%;
-                width: 100%;
+                height: auto;
+                width: 80%;
                 cursor: pointer;
             }
 
@@ -29,8 +30,8 @@
         }
 
         .center-content {
-            width: 50%;
-            border: 1px solid orange;
+            width: 55%;
+            // border: 1px solid orange;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,10 +47,39 @@
 
         .right-content {
             width: 25%;
-            border: 1px solid grey;
+            // border: 1px solid grey;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
+
+            .support {
+                padding-right: 50px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                i {
+                    font-size: 15px;
+                    margin-right: 5px;
+                }
+            }
+
+            .language-vi {
+                cursor: pointer;
+
+                &.active {
+                    color: orange;
+                }
+            }
+
+            .language-en {
+                margin: 0 10px;
+                cursor: pointer;
+
+                &.active {
+                    color: blue;
+                }
+            }
         }
     }
 
@@ -62,11 +92,12 @@
     height: 485px;
 
     .content-up {
-        height: 50%;
+        height: 65%;
         display: flex;
         flex-direction: column;
-        border: 1px solid grey;
+        // border: 1px solid grey;
         padding-top: 20px;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
 
         .title1 {
             text-align: center;
@@ -112,10 +143,11 @@
     }
 
     .content-down {
-        height: 50%;
-        border: 1px solid green;
+        height: 35%;
+        // border: 1px solid green;
         display: flex;
         justify-content: center;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
 
         .options {
             display: flex;
@@ -125,7 +157,7 @@
             align-items: end;
 
             .option-child {
-                border: 1px solid red;
+                // border: 1px solid red;
                 width: 125px;
                 height: 125px;
 
