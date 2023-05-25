@@ -66,19 +66,27 @@
 
             .language-vi {
                 cursor: pointer;
+                opacity: 0.2;
 
-                &.active {
+                &.active,
+                &:hover {
                     color: orange;
+                    opacity: 1;
                 }
+
             }
 
             .language-en {
                 margin: 0 10px;
                 cursor: pointer;
+                opacity: 0.2;
 
-                &.active {
+                &.active,
+                &:hover {
                     color: blue;
+                    opacity: 1;
                 }
+
             }
         }
     }
