@@ -69,6 +69,12 @@
                         }
                     }
                 }
+                &.active {
+                    a{
+                        color: orange;
+                    }
+                    background: #ededed;
+                }
                 &.active span {
                     font-weight: 500;
                     color: $colormain;
