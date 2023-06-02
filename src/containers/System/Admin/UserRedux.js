@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './UserRedux.scss'
 import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils'
+import * as actions from '../../../store/actions'
 
 class UserRedux extends Component {
 
@@ -15,26 +16,42 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        try {
-            let res = await getAllCodeService("gender");
-            if (res.errCode === 0) {
-                this.setState({
-                    genderArr: res.data,
-                })
-            } else {
+        this.props.getGenderStart();
 
-            }
-            // console.log("allcode check res: ", res);
-        } catch (e) {
-            console.log(e);
-        }
+        // try {
+        //     let res = await getAllCodeService("gender");
+        //     if (res.errCode === 0) {
+        //         this.setState({
+        //             genderArr: res.data,
+        //         })
+        //     } else {
+
+        //     }
+        //     // console.log("allcode check res: ", res);
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
+    componentDidUpdate(preprops, prestate, snapshot) {
+        //render --> didupdate
+        //now(this) vs past(previous)
+
+        if (preprops.genderRedux !== this.props.genderRedux) {
+            this.setState({
+                genderArr: this.props.genderRedux
+            })
+            console.log('didupdate: ', this.props.genderRedux);
+        } else {
+            console.log('didupdate: no update!');
+        }
+    }
 
     render() {
         // console.log('allcode check state: ', this.state);
         let genders = this.state.genderArr;
         let language = this.props.language;
+        console.log('check gender from redux props: ', this.props.genderRedux);
         return (
             <div className='user-redux-container'>
                 <div className="user-redux-title text-center title" >
@@ -127,12 +144,15 @@ class UserRedux extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        genderRedux: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
+        // changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };
 
