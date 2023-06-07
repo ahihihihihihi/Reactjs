@@ -1,3 +1,37 @@
 .btn-save {
     padding: 0 10px;
 }
+
+.preview-img-container {
+
+
+
+    .label-upload {
+        padding: 5px;
+        border-radius: 3px;
+        background-color: #ddd;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .border-image {
+        border: 1px solid #ddd;
+        margin-top: 5px;
+        padding: 2px;
+        border-radius: 3px;
+        cursor: pointer;
+        width: fit-content;
+
+        .preview-image {
+            width: 100px;
+            height: 50px;
+            background: center center no-repeat;
+            background-size: contain;
+        }
+    }
+
+
+}
