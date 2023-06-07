@@ -41,9 +41,9 @@ class UserRedux extends Component {
             this.setState({
                 genderArr: this.props.genderRedux
             })
-            console.log('didupdate: ', this.props.genderRedux);
+            // console.log('didupdate: ', this.props.genderRedux);
         } else {
-            console.log('didupdate: no update!');
+            // console.log('didupdate: no update!');
         }
     }
 
@@ -51,7 +51,8 @@ class UserRedux extends Component {
         // console.log('allcode check state: ', this.state);
         let genders = this.state.genderArr;
         let language = this.props.language;
-        console.log('check gender from redux props: ', this.props.genderRedux);
+        let isGetGenders = this.props.isGetGendersRedux;
+        // console.log('check gender from redux props: ', this.props.genderRedux);
         return (
             <div className='user-redux-container'>
                 <div className="user-redux-title text-center title" >
@@ -62,6 +63,9 @@ class UserRedux extends Component {
                         <div className='row'>
                             <div className='col-12 my-3'>
                                 <FormattedMessage id="manage-user.add" />
+                            </div>
+                            <div className='col-12'>
+                                {isGetGenders ? 'Loading genders...' : ''}
                             </div>
                             <div className='col-3'>
                                 <label>
@@ -146,6 +150,7 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
+        isGetGendersRedux: state.admin.isLoadingGender,
     };
 };
 
