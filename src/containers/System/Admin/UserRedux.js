@@ -27,8 +27,8 @@ class UserRedux extends Component {
             phoneNumber: '',
             address: '',
             gender: '',
-            position: '',
-            role: '',
+            positionId: '',
+            roleId: '',
             avatar: '',
         }
     }
@@ -58,7 +58,7 @@ class UserRedux extends Component {
             let arrPosition = this.props.positionRedux;
             this.setState({
                 positionArr: arrPosition,
-                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : ''
+                positionId: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : ''
             })
         } else {
 
@@ -68,7 +68,7 @@ class UserRedux extends Component {
             let arrRole = this.props.roleRedux;
             this.setState({
                 roleArr: arrRole,
-                role: arrRole && arrRole.length > 0 ? arrRole[0].key : ''
+                roleId: arrRole && arrRole.length > 0 ? arrRole[0].key : ''
             })
         } else {
 
@@ -98,11 +98,22 @@ class UserRedux extends Component {
     }
 
     handleSaveUser = () => {
-        // console.log('check state before submit: ', this.state);
+        console.log('check state before submit: ', this.state);
         let isValid = this.checkValidInput();
-        if (isValid) {
-            alert('ok');
+        if (isValid === false) {
+            return
         }
+        this.props.createNewUser({
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            address: this.state.address,
+            phoneNumber: this.state.phoneNumber,
+            gender: this.state.gender,
+            roleId: this.state.roleId,
+            positionId: this.state.positionId
+        })
     }
 
     checkValidInput = () => {
@@ -151,7 +162,7 @@ class UserRedux extends Component {
         let roles = this.state.roleArr;
         let language = this.props.language;
         let isGetGenders = this.props.isGetGendersRedux;
-        let { email, password, firstName, lastName, phoneNumber, address, gender, position, role, avatar } = this.state;
+        let { email, password, firstName, lastName, phoneNumber, address, gender, positionId, roleId, avatar } = this.state;
         // console.log('check gender from redux props: ', this.props.isGetGendersRedux);
         return (
             <div className='user-redux-container'>
@@ -216,7 +227,7 @@ class UserRedux extends Component {
                             </div>
                             <div class="form-group col-3">
                                 <label><FormattedMessage id="manage-user.position" /></label>
-                                <select class="form-control" onChange={(event) => { this.onChangeInput(event, 'position') }}>
+                                <select class="form-control" onChange={(event) => { this.onChangeInput(event, 'positionId') }}>
                                     {positions && positions.length > 0 &&
                                         positions.map((item, index) => {
                                             return (
@@ -228,7 +239,7 @@ class UserRedux extends Component {
                             </div>
                             <div class="form-group col-3">
                                 <label><FormattedMessage id="manage-user.role" /> </label>
-                                <select class="form-control" onChange={(event) => { this.onChangeInput(event, 'role') }}>
+                                <select class="form-control" onChange={(event) => { this.onChangeInput(event, 'roleId') }}>
                                     {roles && roles.length > 0 &&
                                         roles.map((item, index) => {
                                             return (
@@ -283,6 +294,8 @@ const mapDispatchToProps = dispatch => {
         getGenderStart: () => dispatch(actions.fetchGenderStart()),
         getPositionStart: () => dispatch(actions.fetchPositionStart()),
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
+        createNewUser: (data) => dispatch(actions.createNewUser(data)),
+
         // changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };
