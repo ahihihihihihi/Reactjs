@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../utils'
 import * as actions from '../../../store/actions'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+import TableManageUser from './TableManageUser';
 
 
 class UserRedux extends Component {
@@ -73,6 +74,23 @@ class UserRedux extends Component {
         } else {
 
         }
+
+        if (preprops.listUsers !== this.props.listUsers) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: '',
+                positionId: '',
+                roleId: '',
+                avatar: '',
+            })
+        } else {
+
+        }
     }
 
     handleOnchangeImage = (event) => {
@@ -98,7 +116,7 @@ class UserRedux extends Component {
     }
 
     handleSaveUser = () => {
-        console.log('check state before submit: ', this.state);
+        // console.log('check state before submit: ', this.state);
         let isValid = this.checkValidInput();
         if (isValid === false) {
             return
@@ -114,6 +132,7 @@ class UserRedux extends Component {
             roleId: this.state.roleId,
             positionId: this.state.positionId
         })
+
     }
 
     checkValidInput = () => {
@@ -261,8 +280,11 @@ class UserRedux extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className='col-12 mt-3'>
+                            <div className='col-12 my-3'>
                                 <button onClick={() => this.handleSaveUser()} className='btn btn-primary btn-save'><FormattedMessage id="manage-user.save" /></button>
+                            </div>
+                            <div className='col-12'>
+                                <TableManageUser />
                             </div>
                         </div>
                     </div>
@@ -286,6 +308,7 @@ const mapStateToProps = state => {
         positionRedux: state.admin.positions,
         roleRedux: state.admin.roles,
         isGetGendersRedux: state.admin.isLoadingGender,
+        listUsers: state.admin.users,
     };
 };
 
@@ -295,8 +318,6 @@ const mapDispatchToProps = dispatch => {
         getPositionStart: () => dispatch(actions.fetchPositionStart()),
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
         createNewUser: (data) => dispatch(actions.createNewUser(data)),
-
-        // changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };
 
