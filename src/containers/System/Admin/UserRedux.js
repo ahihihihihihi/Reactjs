@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserRedux.scss'
-import { LANGUAGES, CRUD_ACTIONS } from '../../../utils'
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../../utils'
 import * as actions from '../../../store/actions'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
@@ -102,14 +102,16 @@ class UserRedux extends Component {
         }
     }
 
-    handleOnchangeImage = (event) => {
+    handleOnchangeImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
+            let base64 = await CommonUtils.getBase64(file);
+            // console.log('read file to base 64: ', base64);
             let objectUrl = URL.createObjectURL(file);
             this.setState({
                 previewImgURL: objectUrl,
-                avatar: file
+                avatar: base64
             })
         }
         // console.log('Onchange image: ', objectUrl)
@@ -143,7 +145,8 @@ class UserRedux extends Component {
                 phoneNumber: this.state.phoneNumber,
                 gender: this.state.gender,
                 roleId: this.state.roleId,
-                positionId: this.state.positionId
+                positionId: this.state.positionId,
+                avatar: this.state.avatar,
             })
         }
 
@@ -159,7 +162,7 @@ class UserRedux extends Component {
                 gender: this.state.gender,
                 roleId: this.state.roleId,
                 positionId: this.state.positionId,
-                // avatar: this.state.avatar,
+                avatar: this.state.avatar,
             })
         }
 
