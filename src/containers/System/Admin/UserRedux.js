@@ -95,7 +95,8 @@ class UserRedux extends Component {
                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
                 positionId: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : '',
                 roleId: arrRole && arrRole.length > 0 ? arrRole[0].key : '',
-                action: CRUD_ACTIONS.CREATE
+                action: CRUD_ACTIONS.CREATE,
+                previewImgURL: '',
             })
         } else {
 
@@ -210,6 +211,10 @@ class UserRedux extends Component {
 
     handleEditUserFromParent = (user) => {
         // console.log('info user from child: ', user)
+        let imageBase64 = '';
+        if (user.image) {
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary');
+        }
         this.setState({
             email: user.email,
             password: 'HARDCODE',
@@ -226,6 +231,7 @@ class UserRedux extends Component {
             roleId: user.roleId,
             userEditId: user.id,
             action: CRUD_ACTIONS.EDIT,
+            previewImgURL: imageBase64,
         })
     }
 
