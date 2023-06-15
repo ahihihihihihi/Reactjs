@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService } from '../../services/userService';
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getTopDoctorHomeService } from '../../services/userService';
 import { toast } from 'react-toastify'
 
 
@@ -120,6 +120,8 @@ export const fetchAllUsersStart = () => {
         try {
             let res = await getAllUsers("ALL");
             // console.log('res getAllUsers fetchAllUsersStart: ', res);
+            let res1 = await getTopDoctorHomeService();
+            console.log('res top doctor home: ', res1);
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUsersSuccess(res.users.reverse()));
             } else {
