@@ -52,5 +52,9 @@
         "save": "Lưu",
         "upload-image": "Tải ảnh",
         "edit": "Cập nhật"
+    },
+    "homepage": {
+        "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+        "more-info": "Xem thêm"
     }
 }

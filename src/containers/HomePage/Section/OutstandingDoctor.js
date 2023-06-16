@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import Slider from "react-slick";
 
-import * as actions from '../../../store/actions'
-import { LANGUAGES } from '../../../utils'
+import * as actions from '../../../store/actions';
+import { LANGUAGES } from '../../../utils';
+import { FormattedMessage } from 'react-intl';
 
 class OutstandingDoctor extends Component {
 
@@ -30,10 +31,6 @@ class OutstandingDoctor extends Component {
     render() {
         // console.log('check top doctors redux: ', this.props.topDoctorsRedux)
         let arrDortors = this.state.arrDortors;
-        let temp = arrDortors;
-        for (let index = 1; index < 10; index++) {
-            arrDortors = arrDortors.concat(temp);
-        }
         let { language } = this.props;
         // console.log('check array top doctors loop: ', arrDortors);
         return (
@@ -41,10 +38,10 @@ class OutstandingDoctor extends Component {
                 <div className='section-content'>
                     <div className='section-header'>
                         <div className='section-header-title'>
-                            <h2>Bác sĩ nổi bật tuần qua</h2>
+                            <h2><FormattedMessage id="homepage.outstanding-doctor" /></h2>
                         </div>
                         <div className=''>
-                            <button className='section-header-button'>xem thêm</button>
+                            <button className='section-header-button'><FormattedMessage id="homepage.more-info" /></button>
                         </div>
                     </div>
                     <div className='section-body'>

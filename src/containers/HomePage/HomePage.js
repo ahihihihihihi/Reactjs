@@ -20,7 +20,7 @@ class HomePage extends Component {
             infinite: false,
             speed: 500,
             slidesToShow: 4,
-            slidesToScroll: 1
+            slidesToScroll: 4
         };
         return (
             <div>
