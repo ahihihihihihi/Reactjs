@@ -3,10 +3,39 @@ import { connect } from 'react-redux';
 
 import Slider from "react-slick";
 
+import * as actions from '../../../store/actions'
+import { LANGUAGES } from '../../../utils'
+
 class OutstandingDoctor extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arrDortors: [],
+        }
+    }
 
+    componentDidMount() {
+        this.props.loadTopDoctors();
+    }
+
+    componentDidUpdate(preprops, prestate, snapshot) {
+        if (preprops.topDoctorsRedux !== this.props.topDoctorsRedux) {
+            this.setState({
+                arrDortors: this.props.topDoctorsRedux
+            })
+        }
+    }
+
+    render() {
+        // console.log('check top doctors redux: ', this.props.topDoctorsRedux)
+        let arrDortors = this.state.arrDortors;
+        let temp = arrDortors;
+        for (let index = 1; index < 10; index++) {
+            arrDortors = arrDortors.concat(temp);
+        }
+        let { language } = this.props;
+        // console.log('check array top doctors loop: ', arrDortors);
         return (
             <div className='section-share section-outstanding-doctor'>
                 <div className='section-content'>
@@ -20,60 +49,29 @@ class OutstandingDoctor extends Component {
                     </div>
                     <div className='section-body'>
                         <Slider {...this.props.settings}>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 1</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 2</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 4</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 5</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='outer-bg'>
-                                    <div className='section-img'></div>
-                                    <div className='section-text text-center'>
-                                        <div className='section-slide-title'>PGS.TS.BS Hỏi Dân IT</div>
-                                        <div className='section-slide-name'>Cơ Xương Khớp 6</div>
-                                    </div>
-                                </div>
-                            </div>
+                            {arrDortors && arrDortors.length > 0 &&
+                                arrDortors.map((item, index) => {
+                                    // if (index === 0) {
+                                    //     console.log('check item: ', item);
+                                    // }
+                                    let imageBase64 = '';
+                                    if (item.image) {
+                                        imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                    }
+                                    let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
+                                    let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
+                                    return (
+                                        <div className='section-slide' key={index}>
+                                            <div className='outer-bg'>
+                                                <div className='section-img' style={{ backgroundImage: `url(${imageBase64})` }}></div>
+                                                <div className='section-text text-center'>
+                                                    <div className='section-slide-title'>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
+                                                    <div className='section-slide-name'>Cơ Xương Khớp {index}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                         </Slider>
                     </div>
                 </div>
@@ -86,12 +84,15 @@ class OutstandingDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        topDoctorsRedux: state.admin.topDoctors,
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        loadTopDoctors: () => dispatch(actions.fetchTopDoctors()),
     };
 };
 
