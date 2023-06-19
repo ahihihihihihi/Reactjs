@@ -28,6 +28,7 @@ class OutstandingDoctor extends Component {
         }
     }
 
+
     render() {
         // console.log('check top doctors redux: ', this.props.topDoctorsRedux)
         let arrDortors = this.state.arrDortors;
@@ -73,7 +74,6 @@ class OutstandingDoctor extends Component {
                     </div>
                 </div>
             </div>
-
         );
     }
 
