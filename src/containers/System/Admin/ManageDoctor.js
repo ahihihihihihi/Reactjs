@@ -9,12 +9,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
 import Select from 'react-select';
-
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
+import { LANGUAGES } from '../../../utils';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -28,16 +23,37 @@ class ManageDoctor extends Component {
             contentMarkdown: '',
             contentHTML: '',
             selectedOption: '',
-            description: ''
+            description: '',
+            listDoctors: '',
         }
     }
 
     async componentDidMount() {
-
+        this.props.fetchAllDoctorsRedux();
     }
 
     componentDidUpdate(preprops, prestate, snapshot) {
-
+        let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
+        if (preprops.allDoctors !== this.props.allDoctors) {
+            this.setState({
+                listDoctors: dataSelect,
+            })
+        }
+        if (preprops.language !== this.props.language) {
+            for (let i = 0; i < dataSelect.length; i++) {
+                if (dataSelect[i].value === this.state.selectedOption.value) {
+                    let label = dataSelect[i].label;
+                    let value = dataSelect[i].value;
+                    this.setState({
+                        selectedOption: { label, value }
+                    })
+                    break;
+                }
+            }
+            this.setState({
+                listDoctors: dataSelect,
+            })
+        }
     }
 
     handleEditorChange = ({ html, text }) => {
@@ -49,7 +65,13 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log(`check state after click button:`, this.state)
+        // console.log(`check state after click button:`, this.state)
+        this.props.saveDetailDoctor({
+            contentHTML: this.state.contentHTML,
+            contentMarkdown: this.state.contentMarkdown,
+            description: this.state.description,
+            doctorId: this.state.selectedOption.value
+        })
     }
 
     handleChange = selectedOption => {
@@ -62,7 +84,25 @@ class ManageDoctor extends Component {
         })
     }
 
+    buildDataInputSelect = (inputData) => {
+        let result = [];
+        let { language } = this.props;
+        if (inputData && inputData.length > 0) {
+            inputData.map((item, index) => {
+                let object = {};
+                let labelVi = `${item.lastName} ${item.firstName}`;
+                let labelEn = `${item.firstName} ${item.lastName}`;
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                object.value = item.id;
+                result.push(object);
+            })
+        }
+
+        return result;
+    }
+
     render() {
+        // console.log('list doctors from redux: ', this.state);
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'>
@@ -72,9 +112,9 @@ class ManageDoctor extends Component {
                     <div className='content-left'>
                         <label>Chọn bác sĩ</label>
                         <Select
-                            value={this.state.selecteddoctor}
+                            value={this.state.selectedOption}
                             onChange={this.handleChange}
-                            options={options}
+                            options={this.state.listDoctors}
                         />
                     </div>
 
@@ -109,13 +149,15 @@ class ManageDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        allDoctors: state.admin.allDoctors,
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctors()),
+        saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
     };
 };
 

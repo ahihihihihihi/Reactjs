@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getTopDoctorHomeService } from '../../services/userService';
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService } from '../../services/userService';
 import { toast } from 'react-toastify'
 
 
@@ -231,3 +231,60 @@ export const fetchTopDoctorsFailed = () => ({
     type: actionTypes.FETCH_TOP_DOCTORS_FAILED
 })
 
+
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data));
+            } else {
+                toast.error('Fetch all doctors failed');
+                dispatch(fetchAllDoctorsFailed());
+            }
+        } catch (e) {
+            toast.error('Fetch all doctors failed');
+            dispatch(fetchTopDoctorsFailed());
+            console.log('fetchAllDoctorsFailed error: ', e);
+        }
+    }
+
+}
+
+export const fetchAllDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+    dataDr: data
+})
+
+export const fetchAllDoctorsFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_FAILED
+})
+
+
+export const saveDetailDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailDoctorService(data);
+            if (res && res.errCode === 0) {
+                toast.success('Save info doctor successfully');
+                dispatch(saveDetailDoctorSuccess());
+            } else {
+                toast.error('Save info doctor failed');
+                dispatch(saveDetailDoctorFailed());
+            }
+        } catch (e) {
+            toast.error('Save info doctor failed');
+            dispatch(saveDetailDoctorFailed());
+            console.log('saveDetailDoctorFailed error: ', e);
+        }
+    }
+
+}
+
+export const saveDetailDoctorSuccess = () => ({
+    type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
+})
+
+export const saveDetailDoctorFailed = () => ({
+    type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED
+})
