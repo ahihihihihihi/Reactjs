@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import * as actions from '../../../store/actions';
 import { LANGUAGES } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 
 class OutstandingDoctor extends Component {
 
@@ -28,6 +29,10 @@ class OutstandingDoctor extends Component {
         }
     }
 
+    handleViewDetailDoctor = (doctor) => {
+        // console.log('view detail doctor: ', doctor)
+        this.props.history.push(`/detail-doctor/${doctor.id}`)
+    }
 
     render() {
         // console.log('check top doctors redux: ', this.props.topDoctorsRedux)
@@ -59,7 +64,9 @@ class OutstandingDoctor extends Component {
                                     let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
                                     let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                                     return (
-                                        <div className='section-slide' key={index}>
+                                        <div className='section-slide' key={index}
+                                            onClick={() => this.handleViewDetailDoctor(item)}
+                                        >
                                             <div className='outer-bg'>
                                                 <div className='section-img' style={{ backgroundImage: `url(${imageBase64})` }}></div>
                                                 <div className='section-text text-center'>
@@ -93,4 +100,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor));
