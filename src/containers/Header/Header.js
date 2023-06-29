@@ -20,7 +20,7 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        console.log('UserInfo: ', this.props.userInfo);
+        // console.log('UserInfo: ', this.props.userInfo);
         let {userInfo} = this.props;
         let menu = [];
         if (userInfo && !_.isEmpty(userInfo)) {
