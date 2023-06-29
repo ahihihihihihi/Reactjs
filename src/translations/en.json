@@ -59,5 +59,8 @@
     "homepage": {
         "outstanding-doctor": "OutStanding Doctors",
         "more-info": "More Info"
+    },
+    "manage-schedule": {
+        "title": "Manage the doctor's examination plan"
     }
 }
