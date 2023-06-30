@@ -16,13 +16,15 @@ class Doctor extends Component {
             listDoctors:[],
             selectedDoctor:{},
             selectedOption:{},
-            currentDate:'',        
+            currentDate:'', 
+            rangeTime:[],       
         }
     }
    
    
     async componentDidMount() {
         this.props.fetchAllDoctorsRedux();
+        this.props.fetchAllScheduleTime();
     }
  
     componentDidUpdate(preprops, prestate, snapshot) {
@@ -32,6 +34,7 @@ class Doctor extends Component {
                 listDoctors: dataSelect,
             })
         }
+
         if (preprops.language !== this.props.language) {
             for (let i = 0; i < dataSelect.length; i++) {
                 if (dataSelect[i].value === this.state.selectedOption.value) {
@@ -47,6 +50,13 @@ class Doctor extends Component {
                 listDoctors: dataSelect,
             })
         }
+
+        if (preprops.allScheduleTime !== this.props.allScheduleTime) {
+            this.setState({
+                rangeTime: this.props.allScheduleTime,
+            })
+        }
+
     }
 
     buildDataInputSelect = (inputData) => {
@@ -82,6 +92,9 @@ class Doctor extends Component {
 
     render() {
         // console.log('check state: ', this.state);
+        // console.log('check props: ', this.props);
+        let {rangeTime} = this.state;
+        let {language} = this.props;
         return (
                 <div className='manage-schedule-container'>
                     <div className='m-s-title'>
@@ -91,7 +104,7 @@ class Doctor extends Component {
                         <div className='row'>
                             <div className='col-6'>
                                 <label>
-                                    Chọn Bác sĩ
+                                <FormattedMessage id="manage-schedule.choose-doctor" />
                                 </label>
                                 <Select
                             value={this.state.selectedOption}
@@ -101,7 +114,7 @@ class Doctor extends Component {
                             </div>
                             <div className='col-6'>
                                 <label>
-                                    Chọn ngày
+                                <FormattedMessage id="manage-schedule.choose-date" />
                                 </label>
                                 <DatePicker 
                                 onChange = {this.handleOnChangeDatePicker}
@@ -111,9 +124,17 @@ class Doctor extends Component {
                                 />
                             </div>
                             <div className='col-12 pick-hour-container my-3'>
-                                
+                            {rangeTime && rangeTime.length > 0 &&
+                                        rangeTime.map((item, index) => {
+                                            return (
+                                                <button className='btn btn-schedule' key={index}>
+                                                    {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                                </button>
+                                            )
+                                        })
+                                    }
                             </div>
-                            <button className='btn btn-primary btn-m-s'>Lưu thông tin</button>
+                            <button className='btn btn-primary btn-m-s'><FormattedMessage id="manage-schedule.save" /></button>
                         </div>
                     </div>
                 </div>
@@ -126,12 +147,14 @@ const mapStateToProps = state => {
         isLoggedIn: state.user.isLoggedIn,
         allDoctors: state.admin.allDoctors,
         language: state.app.language,
+        allScheduleTime: state.admin.allScheduleTime,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctors()),
+        fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
     };
 };
 

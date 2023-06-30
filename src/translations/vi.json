@@ -61,6 +61,9 @@
         "more-info": "Xem thêm"
     },
     "manage-schedule": {
-        "title": "Quản lý kế hoạch khám bệnh của Bác sĩ"
+        "title": "Quản lý kế hoạch khám bệnh của Bác sĩ",
+        "choose-doctor": "Chọn bác sĩ",
+        "choose-date": "Chọn ngày",
+        "save": "Lưu thông tin"
     }
 }
