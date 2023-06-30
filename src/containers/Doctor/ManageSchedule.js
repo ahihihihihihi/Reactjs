@@ -9,6 +9,7 @@ import DatePicker from '../../components/Input/DatePicker';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import _ from 'lodash';
+import { saveBulkScheduleDoctor } from '../../services/userService';
 
 
 class Doctor extends Component {
@@ -151,6 +152,8 @@ class Doctor extends Component {
 
             console.log('Schedule: ',result)
         }
+
+        saveBulkScheduleDoctor(result);
 
 
         // console.log('check state current date: ',moment(currentDate).format('DD/MM/YYYY'))
