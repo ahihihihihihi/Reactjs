@@ -132,13 +132,32 @@ class Doctor extends Component {
         }
 
         let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        let result = [];
+
+        if (rangeTime && rangeTime.length > 0) {
+            let selectedTime = rangeTime.filter(item => item.isSelected === true)
+            if (selectedTime && selectedTime.length > 0) {
+                selectedTime.map(schedule => {
+                    let object = {};
+                    object.doctorId = selectedDoctor.value;
+                    object.date = formatedDate;
+                    object.time = schedule.keyMap;
+                    result.push(object);
+                })
+            } else {
+                toast.error('Invalid selected time!');
+                return
+            }
+
+            console.log('Schedule: ',result)
+        }
 
 
-        console.log('check state current date: ',moment(currentDate).format('DD/MM/YYYY'))
+        // console.log('check state current date: ',moment(currentDate).format('DD/MM/YYYY'))
     }
 
     render() {
-        console.log('check state: ', this.state);
+        // console.log('check state: ', this.state);
         // console.log('check props: ', this.props);
         let {rangeTime} = this.state;
         let {language} = this.props;
@@ -168,6 +187,7 @@ class Doctor extends Component {
                                 className = 'form-control'
                                 value = {this.state.currentDate}
                                 minDate = {new Date()}
+                                disable = {[new Date()]}
                                 />
                             </div>
                             <div className='col-12 pick-hour-container my-3'>

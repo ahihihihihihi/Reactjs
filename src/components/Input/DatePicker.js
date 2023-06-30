@@ -138,7 +138,7 @@ class DatePicker extends Component {
     DISPLAY_FORMAT = "d/m/Y";
 
     render() {
-        const { value, onChange, minDate, onClose, ...otherProps } = this.props;
+        const { value, onChange, minDate, onClose, disable, ...otherProps } = this.props;
         const options = {
             dateFormat: this.DISPLAY_FORMAT,
             allowInput: true,
@@ -148,6 +148,9 @@ class DatePicker extends Component {
         };
         if (minDate) {
             options.minDate = minDate;
+        }
+        if (disable) {
+            options.disable = disable;
         }
         return (
             <Flatpickr
