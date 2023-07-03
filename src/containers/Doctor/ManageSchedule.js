@@ -157,6 +157,10 @@ class Doctor extends Component {
                 formatedDate:formatedDate
             })
 
+            if (res) {
+                toast.success('Create the schedule successfully');
+            }
+
             // console.log('check res saveBulkScheduleDoctor: ',res)
         }
 
