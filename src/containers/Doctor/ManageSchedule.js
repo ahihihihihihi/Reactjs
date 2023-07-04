@@ -157,8 +157,11 @@ class Doctor extends Component {
                 formatedDate:formatedDate
             })
 
-            if (res) {
+            if (res && res.errCode === 0) {
                 toast.success('Create the schedule successfully');
+            } else {
+                toast.error('error saveBulkScheduleDoctor');
+                console.log('error saveBulkScheduleDoctor >>> res: ',res);
             }
 
             // console.log('check res saveBulkScheduleDoctor: ',res)
