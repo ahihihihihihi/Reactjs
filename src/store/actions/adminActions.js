@@ -267,14 +267,14 @@ export const saveDetailDoctor = (data) => {
             let res = await saveDetailDoctorService(data);
             console.log('res saveDetailDoctor: ', res);
             if (res && res.errCode === 0) {
-                toast.success('Save info doctor successfully');
+                toast.success(res.errmessage);
                 dispatch(saveDetailDoctorSuccess());
             } else {
-                toast.error('Save info doctor failed');
+                toast.error(res.errmessage);
                 dispatch(saveDetailDoctorFailed());
             }
         } catch (e) {
-            toast.error('Save info doctor failed');
+            toast.error('res.errmessage');
             dispatch(saveDetailDoctorFailed());
             console.log('saveDetailDoctorFailed error: ', e);
         }
