@@ -175,4 +175,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorSchedule);
-<FormattedMessage id="patient.detail-doctor." />
