@@ -5,22 +5,89 @@ import './BookingModal.scss';
 import { Modal } from 'reactstrap';
 import ProfileDoctor from '../ProfileDoctor';
 import _ from 'lodash';
+import DatePicker from '../../../../components/Input/DatePicker';
+import * as actions from '../../../../store/actions';
+import { LANGUAGES } from '../../../../utils';
+import Select from 'react-select';
+import { postPatientBookAppointment } from '../../../../services/userService';
+import { Toast } from 'react-toastify';
 
 class BookingModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            
+            fullName:'',
+            phoneNumber:'',
+            email:'',
+            address:'',
+            reason:'',
+            birthday:'',
+            selectedGender:'',
+            doctorId:'',
+            genders:'',
+            timeType:'',
         }
     }
 
     async componentDidMount() {
-        
+        this.props.getGenders();
+    }
+
+    buildDataGender = (data) => {
+        let result = [];
+        let language = this.props.language;
+        if (data && data.lenghth > 0) {
+            data.map(item => {
+                let object = {};
+                object.label = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
+                object.value = item.keyMap;
+                result.push(object);
+            })
+        }
+        return result;
     }
 
     componentDidUpdate(preprops, prestate, snapshot) {
+        if (preprops.language !== this.props.language || preprops.genders !== this.props.genders) {
+            this.setState({
+                genders:this.buildDataGender(this.props.genders),
+            })
+        }
 
+        if (preprops.dataTime !== this.props.dataTime) {
+            if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
+                let doctorId = this.props.dataTime.doctorId;
+                let timeType = this.props.dataTime.timeType;
+                this.setState({
+                    doctorId:doctorId,
+                    timeType:timeType
+                })
+            }
+        }
+    }
+
+    handleOnchangeInput = (event,id) => {
+        let valueInput = event.target.value;
+        let copyState = {...this.state};
+        copyState[id] = valueInput;
+        this.setState({
+            ...copyState
+        })
+    } 
+
+    handleOnchangeDatePicker = (date) => {
+        this.setState({
+            birthday:date[0]
+        })
+    }
+
+    handleChangeSelect = (selectedOption) => {
+        this.setState({selectedGender:selectedOption})
+    }
+
+    handleConfirmBooking = async () => {
+        
     }
 
 
@@ -112,12 +179,13 @@ class BookingModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        
+        language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenders: () => dispatch(actions.fetchGenderStart()),
     };
 };
 
