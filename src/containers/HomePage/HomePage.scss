@@ -31,7 +31,7 @@
 //..................................................
 
 .section-share {
-    height: 300px;
+    padding-bottom: 40px;
 
 
     &.section-speciality {
@@ -75,6 +75,7 @@
             margin: 0 auto;
             padding: 10px;
             cursor: pointer;
+            min-height: 230px;
         }
     }
 
