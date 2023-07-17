@@ -64,6 +64,12 @@ class ManageSpecialty extends Component {
         // console.log('check state: ',this.state);
         if (res && res.errCode === 0) {
             toast.success('Add new specialty successfully!');
+            this.setState({
+                name:'',
+                imageBase64:'',
+                descriptionHTML:'',
+                descriptionMarkdown:'',
+            })
         } else {
             toast.error('Add new speciaty error!');
             console.log('check Add new speciaty error: ',res);

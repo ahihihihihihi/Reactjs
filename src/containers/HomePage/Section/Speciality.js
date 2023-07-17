@@ -1,52 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-
 import Slider from "react-slick";
+import { getAllSpecialty } from '../../../services/userService';
 
 
 
 class Speciality extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSpecialty:[],
+        }
+    }
 
+    async componentDidMount() {
+        let res = await getAllSpecialty();
+        if (res && res.errCode === 0) {
+            this.setState({
+                dataSpecialty:res.data ? res.data : []
+            })
+        }
+    }
+
+    componentDidUpdate(preprops, prestate, snapshot) {
+
+    }
+
+
+    render() {
+        let {dataSpecialty} = this.state;
+        // console.log('check state: ',this.state);
         return (
             <div className='section-share section-speciality'>
                 <div className='section-content'>
                     <div className='section-header'>
                         <div className='section-header-title'>
-                            <h2>Chuyên khoa phổ biến</h2>
+                            <h2><FormattedMessage id='homepage.specialty-popular' /></h2>
                         </div>
                         <div className=''>
-                            <button className='section-header-button'>xem thêm</button>
+                            <button className='section-header-button'><FormattedMessage id='homepage.more-info' /></button>
                         </div>
                     </div>
                     <div className='section-body'>
                         <Slider {...this.props.settings}>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 1</div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 2</div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 3</div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 4</div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 5</div>
-                            </div>
-                            <div className='section-slide'>
-                                <div className='section-img'></div>
-                                <div className='section-slide-title'>Cơ Xương Khớp 6</div>
-                            </div>
+                            {dataSpecialty && dataSpecialty.length > 0 &&
+                                dataSpecialty.map((item,index) => {
+                                    return (
+                                        <div className='section-slide' key={index}>
+                                            <div className='section-img' style={{ backgroundImage: `url(${item.image})` }}></div>
+                                            <div className='section-slide-title'>{item.name}</div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </Slider>
                     </div>
                 </div>
