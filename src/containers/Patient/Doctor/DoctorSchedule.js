@@ -25,6 +25,7 @@ class DoctorSchedule extends Component {
         // console.log('moment vi: ', moment(new Date()).format('dddd - DD/MM'));
         // console.log('moment en: ', moment(new Date()).locale('en').format('ddd - DD/MM'));
         let allDays = this.getArrDays(language);
+        this.loadingScheduleDoctorByDate();
         this.setState({
             allDays:allDays
         })
@@ -79,6 +80,12 @@ class DoctorSchedule extends Component {
             this.componentDidMount();
         }
         if (preprops.doctorIdFromParent !== this.props.doctorIdFromParent) {
+            this.loadingScheduleDoctorByDate();
+        }
+    }
+
+    loadingScheduleDoctorByDate = async () => {
+        if (this.props.doctorIdFromParent) {
             let allDays = this.getArrDays(this.props.language);
             let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent,allDays[0].value);
             this.setState({
