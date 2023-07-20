@@ -59,7 +59,16 @@
         // background-color: #f5f5f5;
 
         .section-img {
-            background: url(../../assets/bvcr.jpg) center center no-repeat;
+            // background: url(../../assets/bvcr.jpg) center center no-repeat;
+            background: center center no-repeat;
+        }
+
+        .section-slide-title{
+            padding: 10px 0;
+
+            &:hover {
+                color: #45c3d2;
+            }
         }
     }
 

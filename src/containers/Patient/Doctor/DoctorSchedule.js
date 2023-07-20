@@ -17,6 +17,7 @@ class DoctorSchedule extends Component {
             allAvailableTime:[],
             isOpenModalBooking:false,
             dataScheduleTimeModal:{},
+            cur_sche_date:'',
         }
     }
 
@@ -71,7 +72,12 @@ class DoctorSchedule extends Component {
 
     async componentDidUpdate(preprops, prestate, snapshot) {
         if (preprops.language !== this.props.language) {
-            this.componentDidMount();
+            let allDays = this.getArrDays(this.props.language);
+            let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent,this.state.cur_sche_date);
+            this.setState({
+                allAvailableTime:res.data ? res.data : [],
+                allDays:allDays,
+            })
         }
         if (preprops.doctorIdFromParent !== this.props.doctorIdFromParent) {
             this.loadingScheduleDoctorByDate();
@@ -84,7 +90,8 @@ class DoctorSchedule extends Component {
             let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent,allDays[0].value);
             this.setState({
                 allAvailableTime:res.data ? res.data : [],
-                allDays:allDays
+                allDays:allDays,
+                cur_sche_date:allDays[0].value
             })
         }
     }
@@ -97,7 +104,8 @@ class DoctorSchedule extends Component {
             // console.log('check res schedule from react: ', res);
             if (res && res.errCode === 0) {
                 this.setState({
-                    allAvailableTime:res.data ? res.data : []
+                    allAvailableTime:res.data ? res.data : [],
+                    cur_sche_date:date
                 })
             }
             
@@ -122,6 +130,7 @@ class DoctorSchedule extends Component {
     render() {
         let {allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal} = this.state;
         let {language} = this.props;
+        console.log('check state doctor schedule: ',this.state);
         return (
             <>
                 <div className='doctor-schedule-container'>
