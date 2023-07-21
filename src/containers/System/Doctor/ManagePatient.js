@@ -3,24 +3,53 @@ import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
 import './ManagePatient.scss';
 import DatePicker from '../../../components/Input/DatePicker';
+import { getAllPatientForDoctor } from '../../../services/userService';
+import moment from 'moment';
 
 class ManagePatient extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currentDate: new Date(),
+            currentDate: moment(new Date()).startOf('day').valueOf(),
+            dataPatient:[]
         }
     }
 
     async componentDidMount() {
-        
+        let {user} = this.props;
+        let {currentDate} = this.state;
+        let formatedDate = new Date(currentDate).getTime();
+        this.getDataPatient(user,formatedDate);
+    }
+
+    getDataPatient = async(user,formatedDate) => {
+        let res = await getAllPatientForDoctor({
+            doctorId:user.id,
+            date:formatedDate
+        })
+        // console.log('check res: ',res);
+        if (res && res.errCode === 0 ) {
+            this.setState({
+                dataPatient:res.data
+            })
+        }
     }
 
     handleOnChangeDatePicker = (date) => {
+        // console.log('check current date: ',new Date(date[0]).getTime());
+        // console.log('check user: ',this.props.user);
         this.setState({
             currentDate:date[0],
-        })
+        },() => this.componentDidMount())
+    }
+
+    handleBtnConfirm = () => {
+
+    }
+
+    handleBtnRemedy = () => {
+
     }
 
     componentDidUpdate(preprops, prestate, snapshot) {
@@ -29,7 +58,9 @@ class ManagePatient extends Component {
 
 
     render() {
-
+        let {dataPatient} = this.state;
+        // console.log('check state: ',this.state);
+        // console.log('check props: ',this.props);
         return (
             <div className='manage-patient-container'>
                 <div className='m-p-title'>
@@ -46,8 +77,44 @@ class ManagePatient extends Component {
                             value = {this.state.currentDate}
                         />
                     </div>
-                    <div className='col-12 table-manage-patient'>
-                        Table Patient
+                    <div className='col-12 table-manage-patient mt-3'>
+                        <table style={{width:'100%'}}>
+                            <tbody>
+                                <tr>
+                                    <td>STT</td>
+                                    <td>Thời gian</td>
+                                    <td>Họ & Tên</td>
+                                    <td>Địa chỉ</td>
+                                    <td>Giới tính</td>
+                                    <td>Actions</td>
+                                </tr>
+                                {dataPatient && dataPatient.length > 0 ?
+                                    dataPatient.map((item,index)=>{
+                                        return(
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{item.timeTypeDataPatient.valueVi}</td>
+                                                <td>{item.patientData.firstName}</td>
+                                                <td>{item.patientData.address}</td>
+                                                <td>{item.patientData.genderData.valueVi}</td>
+                                                <td>
+                                                    <button className='mp-btn-confirm' onClick={()=> this.handleBtnConfirm()}>
+                                                        Xác nhận
+                                                    </button>
+                                                    <button className='mp-btn-remedy' onClick={()=> this.handleBtnRemedy()}>
+                                                        Gửi hóa đơn
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                    :
+                                    <tr>
+                                        <td colSpan='6'>no data</td>
+                                    </tr>
+                                }
+                            </tbody>    
+                        </table>
                     </div>
                 </div>
             </div>
@@ -58,6 +125,7 @@ class ManagePatient extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        user:state.user.userInfo,
     };
 };
 
