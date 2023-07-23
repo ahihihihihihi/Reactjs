@@ -40,6 +40,10 @@
             .down {
                 text-align: justify;
                 padding-top: 10px;
+
+                .like-share-plugin {
+                    margin: 10px 0 20px 0;
+                }
             }
         }
     }
@@ -66,6 +70,10 @@
         border-top: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
 
+
+        h1,h2,h3 {
+            font-size: 17px;
+        }
         img {
             max-width: 100%;
             margin: 0 auto;
@@ -73,7 +81,9 @@
         }
     }
 
-
+    .comment-doctor {
+        padding: 10px 100px;
+    }
 
 
 

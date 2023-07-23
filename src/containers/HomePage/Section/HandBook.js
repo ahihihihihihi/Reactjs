@@ -25,27 +25,27 @@ class HandBook extends Component {
                         <Slider {...this.props.settings}>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 1</div>
+                                <div className='section-slide-title'>Cẩm nang 1</div>
                             </div>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 2</div>
+                                <div className='section-slide-title'>Cẩm nang 2</div>
                             </div>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 3</div>
+                                <div className='section-slide-title'>Cẩm nang 3</div>
                             </div>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 4</div>
+                                <div className='section-slide-title'>Cẩm nang 4</div>
                             </div>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 5</div>
+                                <div className='section-slide-title'>Cẩm nang 5</div>
                             </div>
                             <div className='section-slide'>
                                 <div className='section-img'></div>
-                                <div className='section-slide-title'>Nha khoa Dr. Care chuyên trồng răng Implant có tốt không? Bảng giá chi tiết 6</div>
+                                <div className='section-slide-title'>Cẩm nang 6</div>
                             </div>
                         </Slider>
                     </div>
